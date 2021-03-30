@@ -74,8 +74,10 @@ public class Model {
 	}
 	
 	public List<Studente> TuttiStudenti() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		this.ListaStudenti=DAOS.getTuttiStudenti();
+		
+		return ListaStudenti;
 	}
 	
 	public Studente verde(String m) {

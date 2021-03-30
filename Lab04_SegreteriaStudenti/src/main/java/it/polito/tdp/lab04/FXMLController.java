@@ -208,8 +208,13 @@ public class FXMLController {
     	
     	Studente S = this.model.verde(M);
     	
-    	txtNome.setText(S.getNome());
-    	txtCognome.setText(S.getCognome());
+    	if (!(S==null)) {
+    		
+    		txtNome.setText(S.getNome());
+        	txtCognome.setText(S.getCognome());
+    		
+    	}
+    	
 
     }
 

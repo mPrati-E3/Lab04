@@ -98,8 +98,8 @@ public class CorsoDAO {
 	 */
 	public boolean iscriviStudenteACorso(Studente studente, Corso corso) {
 		
-		String sql1 = "UPDATE studente SET matricola=?, nome=?, cognome=?, cds=''";
-		String sql2 = "UPDATE iscrizione SET matricola=?, codins=?";
+		String sql1 = "INSERT INTO studente (matricola,nome,cognome,cds) VALUES (?, ?, ?, '')";
+		String sql2 = "INSERT INTO iscrizione (matricola,codins) VALUES (?, ?)";
 		
 		try {
 			
@@ -118,11 +118,10 @@ public class CorsoDAO {
 			st1.executeUpdate();
 			st2.executeUpdate();
 			
-			System.out.println("Ha funzionato!");
+			conn.close();
 
 
 		} catch (SQLException e) {
-			System.out.println("Non ha funzionato :(");
 			return false;
 		}
 		
