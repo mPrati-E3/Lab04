@@ -56,7 +56,7 @@ public class CorsoDAO {
 	 */
 	public Corso getCorso(String cod) {
 		
-		String sql = "SELECT * FROM corso WHERE codins=?";
+		final String sql = "SELECT * FROM corso WHERE codins=?";
 		
 		Corso C = new Corso();
 
@@ -98,8 +98,8 @@ public class CorsoDAO {
 	 */
 	public boolean iscriviStudenteACorso(Studente studente, Corso corso) {
 		
-		String sql1 = "INSERT INTO studente (matricola,nome,cognome,cds) VALUES (?, ?, ?, '')";
-		String sql2 = "INSERT INTO iscrizione (matricola,codins) VALUES (?, ?)";
+		final String sql1 = "INSERT INTO studente (matricola,nome,cognome,cds) VALUES (?, ?, ?, '')";
+		final String sql2 = "INSERT INTO iscrizione (matricola,codins) VALUES (?, ?)";
 		
 		try {
 			
@@ -126,6 +126,52 @@ public class CorsoDAO {
 		}
 		
 		return true;
+	}
+
+
+	public List<Corso> RitornaCorsiStudente(String text) {
+		
+		final String sql = "SELECT corso.codins as cod,nome,crediti,pd \r\n"
+				+ "FROM corso \r\n"
+				+ "INNER JOIN iscrizione\r\n"
+				+ "ON iscrizione.codins=corso.codins\r\n"
+				+ "WHERE iscrizione.matricola=?";
+		
+		Corso C = new Corso();
+		List<Corso> corsi = new LinkedList<Corso>();
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			
+			st.setString(1, text);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				String codins = rs.getString("cod");
+				int numeroCrediti = rs.getInt("crediti");
+				String nome = rs.getString("nome");
+				int periodoDidattico = rs.getInt("pd");
+				
+				C = new Corso(codins,numeroCrediti,nome,periodoDidattico);
+				
+				corsi.add(C);
+				
+				conn.close();
+				
+				return corsi;
+				
+			}
+
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}
+		
+		return corsi;
 	}
 
 

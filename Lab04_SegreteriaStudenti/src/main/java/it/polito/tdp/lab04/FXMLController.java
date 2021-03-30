@@ -161,8 +161,10 @@ public class FXMLController {
 		}
 		
 		List<Corso> ListC = model.CercaCorsiStudente(txtMatricola.getText());
-	
-    	this.Stampante(this.ConvertiLista(ListC), false);
+		
+		if (!(ListC==null)) {
+			this.Stampante(this.ConvertiLista(ListC), false);
+		}
 
     }
 

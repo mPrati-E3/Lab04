@@ -46,8 +46,9 @@ public class Model {
 	}
 	
 	public List<Corso> CercaCorsiStudente(String text) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return DAOC.RitornaCorsiStudente(text);
+		
 	}
 	
 	public boolean IscriviStudente(String m, String n, String c, String cor) {
