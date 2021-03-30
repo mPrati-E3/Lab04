@@ -27,7 +27,7 @@ public class Model {
 		ListaStudenti = listaStudenti;
 	}
 	
-	
+	//cerca quali studenti sono iscritti ad un determinato corso (nome)
 	public List<Studente> CercaIscrittiCorso(String value) {
 		
 		String codice_trovato = "";
@@ -45,12 +45,14 @@ public class Model {
 
 	}
 	
+	//cerca tutti i corsi a cui uno studente è iscritto
 	public List<Corso> CercaCorsiStudente(String text) {
 		
 		return DAOC.RitornaCorsiStudente(text);
 		
 	}
 	
+	//iscrive uno studente ad un corso 
 	public boolean IscriviStudente(String m, String n, String c, String cor) {
 		
 		Studente STU = new Studente(m,n,c,"");
@@ -74,6 +76,7 @@ public class Model {
 		
 	}
 	
+	//restituisce tutti gli studenti del database
 	public List<Studente> TuttiStudenti() {
 		
 		this.ListaStudenti=DAOS.getTuttiStudenti();
@@ -81,6 +84,7 @@ public class Model {
 		return ListaStudenti;
 	}
 	
+	//effettua autocompletamento partendo dalla matricola
 	public Studente verde(String m) {
 		
 		this.ListaStudenti=DAOS.getTuttiStudenti();
@@ -94,6 +98,7 @@ public class Model {
 		return null;
 	}
 	
+	//restituisce tutti i corsi presenti nel database
 	public List<Corso> TuttiCorsi() {
 		
 		List<Corso> C = DAOC.getTuttiICorsi();

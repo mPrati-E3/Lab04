@@ -12,9 +12,7 @@ import it.polito.tdp.lab04.model.Studente;
 
 public class CorsoDAO {
 	
-	/*
-	 * Ottengo tutti i corsi salvati nel Db
-	 */
+	//Ottengo tutti i corsi salvati nel Db
 	public List<Corso> getTuttiICorsi() {
 
 		final String sql = "SELECT * FROM corso";
@@ -51,9 +49,7 @@ public class CorsoDAO {
 	}
 	
 	
-	/*
-	 * Dato un codice insegnamento, ottengo il corso
-	 */
+	//Dato un codice insegnamento, ottengo il corso
 	public Corso getCorso(String cod) {
 		
 		final String sql = "SELECT * FROM corso WHERE codins=?";
@@ -92,10 +88,7 @@ public class CorsoDAO {
 		return C;
 	}
 
-
-	/*
-	 * Data una matricola ed il codice insegnamento, iscrivi lo studente al corso.
-	 */
+	//Data una matricola ed il codice insegnamento, iscrivi lo studente al corso.
 	public boolean iscriviStudenteACorso(Studente studente, Corso corso) {
 		
 		final String sql1 = "INSERT INTO studente (matricola,nome,cognome,cds) VALUES (?, ?, ?, '')";
@@ -128,7 +121,7 @@ public class CorsoDAO {
 		return true;
 	}
 
-
+	//ritorna tutti i corsi a cui un determinato studente (matricola) è iscritto
 	public List<Corso> RitornaCorsiStudente(String text) {
 		
 		final String sql = "SELECT corso.codins as cod,nome,crediti,pd \r\n"

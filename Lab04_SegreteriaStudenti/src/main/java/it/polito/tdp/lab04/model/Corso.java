@@ -1,5 +1,6 @@
 package it.polito.tdp.lab04.model;
 
+//javabean per definire un corso
 public class Corso {
 	
 	private String Codice;

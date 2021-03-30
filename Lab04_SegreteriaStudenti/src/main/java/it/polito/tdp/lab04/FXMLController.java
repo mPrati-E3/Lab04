@@ -69,6 +69,7 @@ public class FXMLController {
     @FXML
     private Button btnReset;
     
+    //trasforma una lista di corsi in una di studenti ---> serve per stampare comodamente
     private List<Studente> ConvertiLista(List<Corso> listC) {
     	
     	List <Studente> L = new LinkedList<Studente>();
@@ -96,6 +97,7 @@ public class FXMLController {
 		return L;
 	}
     
+    //funzione di stampa, prende una lista di studenti e la stampa sulla tabella
     private void Stampante(List<Studente> list, boolean b) {
     	
     	for ( int i = 0; i<tblStampa.getItems().size(); i++) {
@@ -138,6 +140,7 @@ public class FXMLController {
 		
 	}
 
+    //mostra tutti gli iscritti al corso selezionato tramite drop
     @FXML
     void doCercaIscrittiCorso(ActionEvent event) {
     	
@@ -152,7 +155,7 @@ public class FXMLController {
     	
     }
 
-
+    //mostra tutti i corsi a cui uno studente è iscritto
 	@FXML
     void doCorsiStudente(ActionEvent event) {
 		
@@ -168,7 +171,7 @@ public class FXMLController {
 
     }
 
-
+	//iscrive uno studente (matricola necessaria) al corso scelto tramite drop
 	@FXML
     void doIscrivi(ActionEvent event) {
     	
@@ -189,6 +192,7 @@ public class FXMLController {
 
     }
 
+	//pulisce l'interfaccia grafica
     @FXML
     void doReset(ActionEvent event) {
     	txtMatricola.setText("");
@@ -199,6 +203,7 @@ public class FXMLController {
     	}
     }
 
+    //esegue autocompletamento: data la matricola trovo nome e cognome
     @FXML
     void doVerde(ActionEvent event) {
     	
@@ -220,6 +225,7 @@ public class FXMLController {
 
     }
 
+    //inizializzo interfaccia grafica
     @FXML
     void initialize() {
         assert dropCorso != null : "fx:id=\"dropCorso\" was not injected: check your FXML file 'Scene.fxml'.";
@@ -239,6 +245,7 @@ public class FXMLController {
 
     }
     
+    //setto il model e la drop: devo farlo qua perchè prima il model non esiste
     public void setModel (Model m) {
     	this.model=m;
     	

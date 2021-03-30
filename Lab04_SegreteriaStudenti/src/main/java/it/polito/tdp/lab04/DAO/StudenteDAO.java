@@ -12,6 +12,7 @@ import it.polito.tdp.lab04.model.Studente;
 
 public class StudenteDAO {
 	
+	//ritorna quali studenti sono iscritti ad un determinato corso
 	public List<Studente> InterrogaIscrittiCorso(String cod) {
 
 		final String sql = "SELECT studente.matricola AS matricola, nome, cognome, cds\r\n"
@@ -53,6 +54,7 @@ public class StudenteDAO {
 		}
 	}
 	
+	//ritorna tutti gli studenti presenti nel database
 	public List<Studente> getTuttiStudenti() {
 
 		final String sql = "SELECT matricola,nome,cognome,cds FROM studente";

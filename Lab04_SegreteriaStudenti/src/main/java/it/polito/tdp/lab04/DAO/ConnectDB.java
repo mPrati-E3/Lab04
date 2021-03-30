@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//classe puramente dedicata ad inizializzare la connesione con il database
+//verrà richiamata nelle parti DAO
 public class ConnectDB {
 	
 	// check user e password

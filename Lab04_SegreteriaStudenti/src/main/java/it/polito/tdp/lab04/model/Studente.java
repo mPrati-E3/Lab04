@@ -1,5 +1,6 @@
 package it.polito.tdp.lab04.model;
 
+//javabean per definire uno studente
 public class Studente {
 	
 	private String Matricola;
