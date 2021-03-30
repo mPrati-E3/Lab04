@@ -69,32 +69,6 @@ public class FXMLController {
     @FXML
     private Button btnReset;
     
-    //trasforma una lista di corsi in una di studenti ---> serve per stampare comodamente
-    private List<StampType> ConvertiLista(List ListaPassata, boolean isStudente) {
-    	
-    	
-    	
-    	List <StampType> L = new LinkedList<StampType>();
-    	
-    	if (isStudente) {
-    		
-    		for (int i=0; i<ListaPassata.size(); i++) {
-    			StampType NuovoStamp = new StampType(
-    				Integer.toString(ListaPassata.get(i).ge),
-    				lp.getNome(),
-    				lp.getCognome(),
-    				lp.getCDS()
-    				);
-    		}
-    		
-    	} else {
-    		
-    	}
-
-		
-		return L;
-	}
-    
     //funzione di stampa, prende una lista di studenti e la stampa sulla tabella
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	private void Stampante(List<StampType> list, boolean b) {
@@ -145,7 +119,19 @@ public class FXMLController {
     	}
     	
     	ListStu = model.CercaIscrittiCorso(dropCorso.getValue());
-    	this.Stampante(this.ConvertiLista(ListStu, true), true);
+    	List<StampType> ListaStampa = new LinkedList<StampType>();
+    	
+    	for (Studente S : ListStu) {
+    		StampType StampBox = new StampType (
+    				Integer.toString(S.getMatricola()),
+    				S.getNome(),
+    				S.getCognome(),
+    				S.getCDS()
+    				);
+    		ListaStampa.add(StampBox);
+    	}
+    	
+    	this.Stampante(ListaStampa, true);
     	
     }
 
@@ -164,8 +150,33 @@ public class FXMLController {
 		List<Corso> ListC = model.CercaCorsiStudente(M);
 		
 		if (!(ListC==null)) {
-			System.out.println(ListC.get(0).getCodice());
-			this.Stampante(this.ConvertiLista(ListC, false), false);
+			
+    		List<StampType> ListaStampa = new LinkedList<StampType>();
+        	
+        	for (Corso c : ListC) {
+        		
+        		String PerD="";
+        		
+        		if (c.getPD()==1) {
+        			PerD="Primo Semestre";
+        		} else if (c.getPD()==2) {
+        			PerD="Secondo Semestre";
+        		} else {
+        			PerD="";
+        		}
+        		
+        		StampType StampBox = new StampType (
+        				c.getCodice(),
+        				Integer.toString(c.getCrediti()),
+        				c.getNome(),
+        				PerD
+        				);
+        		
+        		
+        		ListaStampa.add(StampBox);
+        	}
+        	
+        	this.Stampante(ListaStampa, false);
 		}
 
     }
@@ -193,7 +204,21 @@ public class FXMLController {
     	
     	if (this.model.IscriviStudente(M,N,C,Cor)) {
     	
-    		this.Stampante(this.ConvertiLista(this.model.TuttiStudenti(), true), true);
+    		List <Studente> ListStu = this.model.TuttiStudenti();
+    		
+    		List<StampType> ListaStampa = new LinkedList<StampType>();
+        	
+        	for (Studente S : ListStu) {
+        		StampType StampBox = new StampType (
+        				Integer.toString(S.getMatricola()),
+        				S.getNome(),
+        				S.getCognome(),
+        				S.getCDS()
+        				);
+        		ListaStampa.add(StampBox);
+        	}
+        	
+        	this.Stampante(ListaStampa, true);
     		
     	}
 
