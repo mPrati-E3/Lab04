@@ -102,10 +102,37 @@ public class CorsoDAO {
 	/*
 	 * Data una matricola ed il codice insegnamento, iscrivi lo studente al corso.
 	 */
-	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
-		// TODO
-		// ritorna true se l'iscrizione e' avvenuta con successo
-		return false;
+	public boolean iscriviStudenteACorso(Studente studente, Corso corso) {
+		
+		String sql1 = "UPDATE studente SET matricola=?, nome=?, cognome=?, cds=''";
+		String sql2 = "UPDATE iscrizione SET matricola=?, codins=?";
+		
+		try {
+			
+			Connection conn = ConnectDB.getConnection();
+			
+			PreparedStatement st1 = conn.prepareStatement(sql1);
+			PreparedStatement st2 = conn.prepareStatement(sql2);
+			
+			st1.setString(1, studente.getMatricola() );
+			st1.setString(2, studente.getNome());
+			st1.setString(3, studente.getCognome());
+			
+			st2.setString(1, studente.getMatricola());
+			st2.setString(2, corso.getCodice());
+
+			st1.executeUpdate();
+			st2.executeUpdate();
+			
+			System.out.println("Ha funzionato!");
+
+
+		} catch (SQLException e) {
+			System.out.println("Non ha funzionato :(");
+			return false;
+		}
+		
+		return true;
 	}
 
 

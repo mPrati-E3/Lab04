@@ -119,10 +119,16 @@ public class FXMLController {
     		
     	}
     	
+		for (int i=0; i<list.size(); i++) {
+			if (list.get(i).getCDS().equals(null)) {
+				list.get(i).setCDS("");
+			}
+		}
+    	
     	colT1.setCellValueFactory(new PropertyValueFactory("Matricola"));
     	colT2.setCellValueFactory(new PropertyValueFactory("Nome"));
     	colT3.setCellValueFactory(new PropertyValueFactory("Cognome"));
-    	colT4.setCellValueFactory(new PropertyValueFactory("cds"));
+    	colT4.setCellValueFactory(new PropertyValueFactory("CDS"));
     	
     	for (int i=0; i<list.size(); i++) {
         	tblStampa.getItems().add(list.get(i));
@@ -167,14 +173,17 @@ public class FXMLController {
     	String M = txtMatricola.getText();
     	String N = txtNome.getText();
     	String C = txtCognome.getText();
+    	String Cor = dropCorso.getValue();
     	
-    	if (M.equals("") || N.equals("") || C.equals("")) {
+    	if (M.equals("") || N.equals("") || C.equals("") || Cor.equals("") || Cor==null) {
     		return;
     	}
     	
-    	this.model.IscriviStudente(M,N,C);
+    	if (this.model.IscriviStudente(M,N,C,Cor)) {
     	
-    	this.Stampante(this.model.TuttiStudenti(), true);
+    		this.Stampante(this.model.TuttiStudenti(), true);
+    		
+    	}
 
     }
 
@@ -230,6 +239,8 @@ public class FXMLController {
         for (int i=0; i<C.size(); i++) {
         	dropCorso.getItems().add(C.get(i).getNome());
         }
+        
+        dropCorso.setValue(C.get(0).getNome());
     }
     
 }

@@ -50,8 +50,26 @@ public class Model {
 		return null;
 	}
 	
-	public void IscriviStudente(String m, String n, String c) {
-		// TODO Auto-generated method stub
+	public boolean IscriviStudente(String m, String n, String c, String cor) {
+		
+		Studente STU = new Studente(m,n,c,"");
+		Corso COR = new Corso();
+		
+		this.ListaCorsi=DAOC.getTuttiICorsi();
+		
+		for (Corso C : ListaCorsi) {
+			if (C.getNome().equals(cor)){
+				COR = C;
+				break;
+			}
+		}
+		
+		
+		if (DAOC.iscriviStudenteACorso(STU, COR)) {
+			return true;
+		}
+		
+		return false;
 		
 	}
 	

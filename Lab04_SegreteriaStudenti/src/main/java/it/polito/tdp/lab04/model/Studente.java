@@ -5,7 +5,7 @@ public class Studente {
 	private String Matricola;
 	private String Nome;
 	private String Cognome;
-	private String CVS;
+	private String CDS;
 	
 	public String getMatricola() {
 		return Matricola;
@@ -25,19 +25,19 @@ public class Studente {
 	public void setCognome(String cognome) {
 		Cognome = cognome;
 	}
-	public String getCVS() {
-		return CVS;
+	public String getCDS() {
+		return CDS;
 	}
-	public void setCVS(String cVS) {
-		CVS = cVS;
+	public void setCDS(String cdS) {
+		CDS = cdS;
 	}
 	
-	public Studente(String matricola, String nome, String cognome, String cVS) {
+	public Studente(String matricola, String nome, String cognome, String cdS) {
 		super();
 		Matricola = matricola;
 		Nome = nome;
 		Cognome = cognome;
-		CVS = cVS;
+		CDS = cdS;
 	}
 	
 	
