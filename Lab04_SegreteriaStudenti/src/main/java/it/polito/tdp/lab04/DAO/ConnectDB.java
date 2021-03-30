@@ -1,8 +1,9 @@
 package it.polito.tdp.lab04.DAO;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import com.zaxxer.hikari.HikariDataSource;
 
 //classe puramente dedicata ad inizializzare la connesione con il database
 //verrà richiamata nelle parti DAO
@@ -14,8 +15,14 @@ public class ConnectDB {
 	public static Connection getConnection() {
 
 		try {
-				Connection connection = DriverManager.getConnection(jdbcUrl);
-				return connection;
+				//Connection connection = DriverManager.getConnection(jdbcUrl);
+			
+				@SuppressWarnings("resource")
+				HikariDataSource connection = new HikariDataSource();
+				connection.setJdbcUrl("jdbc:mysql://localhost:3306/iscritticorsi");
+				connection.setUsername("root");
+				connection.setPassword("root");
+				return connection.getConnection();
 
 		} catch (SQLException e) {
 
