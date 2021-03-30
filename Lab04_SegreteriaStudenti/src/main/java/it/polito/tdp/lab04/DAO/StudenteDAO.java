@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import it.polito.tdp.lab04.model.Corso;
 import it.polito.tdp.lab04.model.Studente;
 
 public class StudenteDAO {
@@ -44,6 +45,41 @@ public class StudenteDAO {
 			conn.close();
 			
 			return Stu;
+			
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}
+	}
+	
+	public List<Studente> getTuttiStudenti() {
+
+		final String sql = "SELECT matricola,nome,cognome,cds FROM studente";
+
+		List<Studente> stu = new LinkedList<Studente>();
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				String M = rs.getString("matricola");
+				String N = rs.getString("nome");
+				String C = rs.getString("cognome");
+				String CDS = rs.getString("cds");
+				
+				Studente S = new Studente(M,N,C,CDS);
+				
+				stu.add(S);
+			}
+
+			conn.close();
+			
+			return stu;
 			
 
 		} catch (SQLException e) {

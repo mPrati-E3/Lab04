@@ -79,7 +79,15 @@ public class Model {
 	}
 	
 	public Studente verde(String m) {
-		// TODO Auto-generated method stub
+		
+		this.ListaStudenti=DAOS.getTuttiStudenti();
+		
+		for(Studente S : ListaStudenti) {
+			if (S.getMatricola().equals(m)) {
+				return S;
+			}
+		}
+			
 		return null;
 	}
 	

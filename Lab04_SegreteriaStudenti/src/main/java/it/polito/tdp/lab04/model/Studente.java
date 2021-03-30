@@ -40,6 +40,14 @@ public class Studente {
 		CDS = cdS;
 	}
 	
+	public Studente() {
+		super();
+		Matricola = "";
+		Nome = "";
+		Cognome = "";
+		CDS = "";
+	}
+	
 	
 	
 	
