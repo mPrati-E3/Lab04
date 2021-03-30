@@ -52,53 +52,52 @@ public class FXMLController {
     private Button btnIscrivi;
 
     @FXML
-    private TableView<Studente> tblStampa;
+    private TableView<StampType> tblStampa;
 
     @FXML
-    private TableColumn<Studente, String> colT1;
+    private TableColumn<StampType, String> colT1;
 
     @FXML
-    private TableColumn<Studente, String> colT2;
+    private TableColumn<StampType, String> colT2;
 
     @FXML
-    private TableColumn<Studente, String> colT3;
+    private TableColumn<StampType, String> colT3;
 
     @FXML
-    private TableColumn<Studente, String> colT4;
+    private TableColumn<StampType, String> colT4;
 
     @FXML
     private Button btnReset;
     
     //trasforma una lista di corsi in una di studenti ---> serve per stampare comodamente
-    private List<Studente> ConvertiLista(List<Corso> listC) {
+    private List<StampType> ConvertiLista(List ListaPassata, boolean isStudente) {
     	
-    	List <Studente> L = new LinkedList<Studente>();
     	
-    	for (int i=0; i<listC.size(); i++) {
+    	
+    	List <StampType> L = new LinkedList<StampType>();
+    	
+    	if (isStudente) {
     		
-    		String PerDid = "";
-    		
-    		if (listC.get(i).getPD()==1) {
-    			PerDid  = "Primo Semestre";
-    		} else if (listC.get(i).getPD()==2){
-    			PerDid  = "Secondo Semestre";
+    		for (int i=0; i<ListaPassata.size(); i++) {
+    			StampType NuovoStamp = new StampType(
+    				Integer.toString(ListaPassata.get(i).ge),
+    				lp.getNome(),
+    				lp.getCognome(),
+    				lp.getCDS()
+    				);
     		}
     		
-    		Studente S = new Studente(
-    								listC.get(i).getCodice(),
-    								Integer.toString(listC.get(i).getCrediti()),
-    								listC.get(i).getNome(),
-    								PerDid);
-    		
-    		L.add(S);
+    	} else {
     		
     	}
+
 		
 		return L;
 	}
     
     //funzione di stampa, prende una lista di studenti e la stampa sulla tabella
-    private void Stampante(List<Studente> list, boolean b) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void Stampante(List<StampType> list, boolean b) {
     	
     	for ( int i = 0; i<tblStampa.getItems().size(); i++) {
     	    tblStampa.getItems().clear();
@@ -121,16 +120,11 @@ public class FXMLController {
     		
     	}
     	
-		for (int i=0; i<list.size(); i++) {
-			if (list.get(i).getCDS().equals(null)) {
-				list.get(i).setCDS("");
-			}
-		}
     	
-    	colT1.setCellValueFactory(new PropertyValueFactory("Matricola"));
-    	colT2.setCellValueFactory(new PropertyValueFactory("Nome"));
-    	colT3.setCellValueFactory(new PropertyValueFactory("Cognome"));
-    	colT4.setCellValueFactory(new PropertyValueFactory("CDS"));
+    	colT1.setCellValueFactory(new PropertyValueFactory("A"));
+    	colT2.setCellValueFactory(new PropertyValueFactory("B"));
+    	colT3.setCellValueFactory(new PropertyValueFactory("C"));
+    	colT4.setCellValueFactory(new PropertyValueFactory("D"));
     	
     	for (int i=0; i<list.size(); i++) {
         	tblStampa.getItems().add(list.get(i));
@@ -151,7 +145,7 @@ public class FXMLController {
     	}
     	
     	ListStu = model.CercaIscrittiCorso(dropCorso.getValue());
-    	this.Stampante(ListStu, true);
+    	this.Stampante(this.ConvertiLista(ListStu, true), true);
     	
     }
 
@@ -159,14 +153,19 @@ public class FXMLController {
 	@FXML
     void doCorsiStudente(ActionEvent event) {
 		
-		if (txtMatricola.getText().equals("")) {
-			return;
-		}
+		int M = 0;
+    	
+		try {
+			M = Integer.parseInt(txtMatricola.getText());
+    	} catch (NumberFormatException e) {
+    		return;
+    	}
 		
-		List<Corso> ListC = model.CercaCorsiStudente(txtMatricola.getText());
+		List<Corso> ListC = model.CercaCorsiStudente(M);
 		
 		if (!(ListC==null)) {
-			this.Stampante(this.ConvertiLista(ListC), false);
+			System.out.println(ListC.get(0).getCodice());
+			this.Stampante(this.ConvertiLista(ListC, false), false);
 		}
 
     }
@@ -174,19 +173,27 @@ public class FXMLController {
 	//iscrive uno studente (matricola necessaria) al corso scelto tramite drop
 	@FXML
     void doIscrivi(ActionEvent event) {
+		
+		int M = 0;
     	
-    	String M = txtMatricola.getText();
+		try {
+			M = Integer.parseInt(txtMatricola.getText());
+    	} catch (NumberFormatException e) {
+    		return;
+    	}
     	String N = txtNome.getText();
     	String C = txtCognome.getText();
     	String Cor = dropCorso.getValue();
     	
-    	if (M.equals("") || N.equals("") || C.equals("") || Cor.equals("") || Cor==null) {
+    	
+    	
+    	if (N.equals("") || C.equals("") || Cor.equals("") || Cor==null) {
     		return;
     	}
     	
     	if (this.model.IscriviStudente(M,N,C,Cor)) {
     	
-    		this.Stampante(this.model.TuttiStudenti(), true);
+    		this.Stampante(this.ConvertiLista(this.model.TuttiStudenti(), true), true);
     		
     	}
 
@@ -207,9 +214,11 @@ public class FXMLController {
     @FXML
     void doVerde(ActionEvent event) {
     	
-    	String M = txtMatricola.getText();
+    	int M = 0;
     	
-    	if (M.equals("")) {
+    	try {
+			M = Integer.parseInt(txtMatricola.getText());
+    	} catch (NumberFormatException e) {
     		return;
     	}
     	

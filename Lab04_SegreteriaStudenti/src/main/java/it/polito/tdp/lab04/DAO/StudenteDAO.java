@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-import it.polito.tdp.lab04.model.Corso;
 import it.polito.tdp.lab04.model.Studente;
 
 public class StudenteDAO {
@@ -33,7 +32,7 @@ public class StudenteDAO {
 
 			while (rs.next()) {
 
-				String m = rs.getString("matricola");
+				int m = rs.getInt("matricola");
 				String n = rs.getString("nome");
 				String c = rs.getString("cognome");
 				String cds = rs.getString("cds");
@@ -69,7 +68,7 @@ public class StudenteDAO {
 
 			while (rs.next()) {
 
-				String M = rs.getString("matricola");
+				int M = rs.getInt("matricola");
 				String N = rs.getString("nome");
 				String C = rs.getString("cognome");
 				String CDS = rs.getString("cds");

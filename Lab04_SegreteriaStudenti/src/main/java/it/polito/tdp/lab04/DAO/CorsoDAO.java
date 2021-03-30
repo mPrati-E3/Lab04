@@ -101,11 +101,11 @@ public class CorsoDAO {
 			PreparedStatement st1 = conn.prepareStatement(sql1);
 			PreparedStatement st2 = conn.prepareStatement(sql2);
 			
-			st1.setString(1, studente.getMatricola() );
+			st1.setInt(1, studente.getMatricola() );
 			st1.setString(2, studente.getNome());
 			st1.setString(3, studente.getCognome());
 			
-			st2.setString(1, studente.getMatricola());
+			st2.setInt(1, studente.getMatricola());
 			st2.setString(2, corso.getCodice());
 
 			st1.executeUpdate();
@@ -122,7 +122,7 @@ public class CorsoDAO {
 	}
 
 	//ritorna tutti i corsi a cui un determinato studente (matricola) è iscritto
-	public List<Corso> RitornaCorsiStudente(String text) {
+	public List<Corso> RitornaCorsiStudente(int M) {
 		
 		final String sql = "SELECT corso.codins as cod,nome,crediti,pd \r\n"
 				+ "FROM corso \r\n"
@@ -137,7 +137,7 @@ public class CorsoDAO {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			
-			st.setString(1, text);
+			st.setInt(1, M);
 
 			ResultSet rs = st.executeQuery();
 

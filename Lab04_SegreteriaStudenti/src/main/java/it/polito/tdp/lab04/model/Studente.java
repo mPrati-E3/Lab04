@@ -3,15 +3,15 @@ package it.polito.tdp.lab04.model;
 //javabean per definire uno studente
 public class Studente {
 	
-	private String Matricola;
+	private int Matricola;
 	private String Nome;
 	private String Cognome;
 	private String CDS;
 	
-	public String getMatricola() {
+	public int getMatricola() {
 		return Matricola;
 	}
-	public void setMatricola(String matricola) {
+	public void setMatricola(int matricola) {
 		Matricola = matricola;
 	}
 	public String getNome() {
@@ -33,7 +33,7 @@ public class Studente {
 		CDS = cdS;
 	}
 	
-	public Studente(String matricola, String nome, String cognome, String cdS) {
+	public Studente(int matricola, String nome, String cognome, String cdS) {
 		super();
 		Matricola = matricola;
 		Nome = nome;
@@ -41,9 +41,10 @@ public class Studente {
 		CDS = cdS;
 	}
 	
+	@SuppressWarnings("null")
 	public Studente() {
 		super();
-		Matricola = "";
+		Matricola = (Integer) null;
 		Nome = "";
 		Cognome = "";
 		CDS = "";
