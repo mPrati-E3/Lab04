@@ -2,6 +2,8 @@ package it.polito.tdp.lab04;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.lab04.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,6 +13,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 public class FXMLController {
+	
+	private Model model;
 
     @FXML
     private ResourceBundle resources;
@@ -103,4 +107,9 @@ public class FXMLController {
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Scene.fxml'.";
 
     }
+    
+    public void setModel (Model m) {
+    	this.model=m;
+    }
+    
 }

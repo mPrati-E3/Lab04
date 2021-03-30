@@ -3,7 +3,7 @@ package it.polito.tdp.lab04;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 
-import it.polito.tdp.lab04.FXMLController;
+import it.polito.tdp.lab04.model.Model;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,22 +14,30 @@ public class EntryPoint extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        
+    	
+    	//creo il modello 
+    	Model model = new Model();
+    	//definisco il controller
     	FXMLController controller;
     	
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-
-        controller = loader.getController();
+    	//definisco il loader e lo assegno con ciò che prendo dalla scene
+    	FXMLLoader loader= new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
     	
-        /*
-		 * Create and set the model here!
-		 */
-		// controller.setModel();
+        //Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
+    	//estraggo la radice direttamente del loader che ho fatto prima
+    	Parent root = loader.load();
+    	
+        Scene scene = new Scene(root);
+    	
+    	//dal loader estraggo il controller e lo assegno alla variabile dedicata
+    	controller=loader.getController();
+    	//chiamo il metodo del controller che mi setta il model
+    	controller.setModel(model);
+    
         
+        //scene.getStylesheets().add("/styles/Styles.css");
         
-        stage.setTitle("JavaFX and Maven");
+        stage.setTitle("Segreteria Studenti");
         stage.setScene(scene);
         stage.show();
     }
