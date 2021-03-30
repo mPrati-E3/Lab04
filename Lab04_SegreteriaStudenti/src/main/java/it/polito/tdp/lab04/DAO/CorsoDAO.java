@@ -33,15 +33,10 @@ public class CorsoDAO {
 				int numeroCrediti = rs.getInt("crediti");
 				String nome = rs.getString("nome");
 				int periodoDidattico = rs.getInt("pd");
-
-				//System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
 				
 				Corso C = new Corso(codins,numeroCrediti,nome,periodoDidattico);
 				
 				corsi.add(C);
-
-				// Crea un nuovo JAVA Bean Corso
-				// Aggiungi il nuovo oggetto Corso alla lista corsi
 			}
 
 			conn.close();
@@ -59,8 +54,42 @@ public class CorsoDAO {
 	/*
 	 * Dato un codice insegnamento, ottengo il corso
 	 */
-	public void getCorso(Corso corso) {
-		// TODO
+	public Corso getCorso(String cod) {
+		
+		String sql = "SELECT * FROM corso WHERE codins=?";
+		
+		Corso C = new Corso();
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			
+			st.setString(1, cod);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				String codins = rs.getString("codins");
+				int numeroCrediti = rs.getInt("crediti");
+				String nome = rs.getString("nome");
+				int periodoDidattico = rs.getInt("pd");
+				
+				C = new Corso(codins,numeroCrediti,nome,periodoDidattico);
+				
+				conn.close();
+				
+				return C;
+				
+			}
+
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}
+		
+		return C;
 	}
 
 	/*

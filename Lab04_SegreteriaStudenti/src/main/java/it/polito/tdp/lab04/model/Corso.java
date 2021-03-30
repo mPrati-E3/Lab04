@@ -40,6 +40,14 @@ public class Corso {
 		PD = pD;
 	}
 	
+	public Corso() {
+		super();
+		Codice = "";
+		Crediti = 0;
+		Nome = "";
+		PD = 0;
+	}
+	
 	
 
 }

@@ -22,5 +22,33 @@ public class Model {
 	}
 	
 	
+	public List<Studente> CercaIscrittiCorso(String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public List<Corso> CercaCorsiStudente(String text) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public void IscriviStudente(String m, String n, String c) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public List<Studente> TuttiStudenti() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Studente verde(String m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
 
 }
