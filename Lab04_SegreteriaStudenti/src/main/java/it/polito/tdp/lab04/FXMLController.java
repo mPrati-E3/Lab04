@@ -1,6 +1,7 @@
 package it.polito.tdp.lab04;
 
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -51,24 +52,51 @@ public class FXMLController {
     private Button btnIscrivi;
 
     @FXML
-    private TableView<?> tblStampa;
+    private TableView<Studente> tblStampa;
 
     @FXML
-    private TableColumn<?, String> colT1;
+    private TableColumn<Studente, String> colT1;
 
     @FXML
-    private TableColumn<?, ?> colT2;
+    private TableColumn<Studente, String> colT2;
 
     @FXML
-    private TableColumn<?, String> colT3;
+    private TableColumn<Studente, String> colT3;
 
     @FXML
-    private TableColumn<?, ?> colT4;
+    private TableColumn<Studente, String> colT4;
 
     @FXML
     private Button btnReset;
     
-    private void Stampante(List<?> list, boolean b) {
+    private List<Studente> ConvertiLista(List<Corso> listC) {
+    	
+    	List <Studente> L = new LinkedList<Studente>();
+    	
+    	for (int i=0; i<listC.size(); i++) {
+    		
+    		String PerDid = "";
+    		
+    		if (listC.get(i).getPD()==1) {
+    			PerDid  = "Primo Semestre";
+    		} else if (listC.get(i).getPD()==2){
+    			PerDid  = "Secondo Semestre";
+    		}
+    		
+    		Studente S = new Studente(
+    								listC.get(i).getCodice(),
+    								Integer.toString(listC.get(i).getCrediti()),
+    								listC.get(i).getNome(),
+    								PerDid);
+    		
+    		L.add(S);
+    		
+    	}
+		
+		return L;
+	}
+    
+    private void Stampante(List<Studente> list, boolean b) {
     	
     	for ( int i = 0; i<tblStampa.getItems().size(); i++) {
     	    tblStampa.getItems().clear();
@@ -81,11 +109,6 @@ public class FXMLController {
     		colT3.setText("Cognome Studente");
     		colT4.setText("CDS");
     		
-    		colT1.setCellValueFactory(new PropertyValueFactory("Matricola"));
-        	colT2.setCellValueFactory(new PropertyValueFactory("Nome"));
-        	colT3.setCellValueFactory(new PropertyValueFactory("Cognome"));
-        	colT4.setCellValueFactory(new PropertyValueFactory("CDS"));
-
     		
     	} else {
     		
@@ -94,17 +117,16 @@ public class FXMLController {
     		colT3.setText("Nome Corso");
     		colT4.setText("PD");
     		
-    		colT1.setCellValueFactory(new PropertyValueFactory("Codice"));
-        	colT2.setCellValueFactory(new PropertyValueFactory("Crediti"));
-        	colT3.setCellValueFactory(new PropertyValueFactory("Nome"));
-        	colT4.setCellValueFactory(new PropertyValueFactory("PD"));
-    		
     	}
+    	
+    	colT1.setCellValueFactory(new PropertyValueFactory("Matricola"));
+    	colT2.setCellValueFactory(new PropertyValueFactory("Nome"));
+    	colT3.setCellValueFactory(new PropertyValueFactory("Cognome"));
+    	colT4.setCellValueFactory(new PropertyValueFactory("cds"));
     	
     	for (int i=0; i<list.size(); i++) {
         	tblStampa.getItems().add(list.get(i));
         }
-    	
     	
     	
 		
@@ -113,11 +135,13 @@ public class FXMLController {
     @FXML
     void doCercaIscrittiCorso(ActionEvent event) {
     	
+    	List<Studente> ListStu = new LinkedList<Studente>();
+    	
     	if (dropCorso.getValue()==null) {
     		return;
     	}
     	
-    	List<Studente> ListStu = model.CercaIscrittiCorso(dropCorso.getValue());
+    	ListStu = model.CercaIscrittiCorso(dropCorso.getValue());
     	this.Stampante(ListStu, true);
     	
     }
@@ -131,11 +155,13 @@ public class FXMLController {
 		}
 		
 		List<Corso> ListC = model.CercaCorsiStudente(txtMatricola.getText());
-    	this.Stampante(ListC, false);
+	
+    	this.Stampante(this.ConvertiLista(ListC), false);
 
     }
 
-    @FXML
+
+	@FXML
     void doIscrivi(ActionEvent event) {
     	
     	String M = txtMatricola.getText();
@@ -199,6 +225,11 @@ public class FXMLController {
     
     public void setModel (Model m) {
     	this.model=m;
+    	
+    	List <Corso> C = this.model.TuttiCorsi();
+        for (int i=0; i<C.size(); i++) {
+        	dropCorso.getItems().add(C.get(i).getNome());
+        }
     }
     
 }

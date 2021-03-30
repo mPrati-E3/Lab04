@@ -3,10 +3,16 @@ package it.polito.tdp.lab04.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import it.polito.tdp.lab04.DAO.CorsoDAO;
+import it.polito.tdp.lab04.DAO.StudenteDAO;
+
 public class Model {
 	
 	private List<Corso> ListaCorsi = new LinkedList<Corso>();
 	private List<Studente> ListaStudenti = new LinkedList<Studente>();
+	
+	CorsoDAO DAOC = new CorsoDAO();
+	StudenteDAO DAOS = new StudenteDAO();
 	
 	public List<Corso> getListaCorsi() {
 		return ListaCorsi;
@@ -23,8 +29,20 @@ public class Model {
 	
 	
 	public List<Studente> CercaIscrittiCorso(String value) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String codice_trovato = "";
+		
+		this.ListaCorsi=DAOC.getTuttiICorsi();
+		
+		for (Corso C : ListaCorsi) {
+			if (value.equals(C.getNome())){
+				codice_trovato=C.getCodice();
+				break;
+			}
+		}
+		
+		return DAOS.InterrogaIscrittiCorso(codice_trovato);
+
 	}
 	
 	public List<Corso> CercaCorsiStudente(String text) {
@@ -45,6 +63,13 @@ public class Model {
 	public Studente verde(String m) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public List<Corso> TuttiCorsi() {
+		
+		List<Corso> C = DAOC.getTuttiICorsi();
+		
+		return C;
 	}
 	
 	
